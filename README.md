@@ -17,6 +17,7 @@ An app to let you store multiple to-do lists, add items, and check off items.
 * CoreData 
 * SQLLight 
 * RelationalDatabases
+* Singletons
 
 ## Future Features / Fixes
 * ?
