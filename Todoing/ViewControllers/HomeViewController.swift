@@ -27,9 +27,9 @@ class HomeViewController: UITableViewController {
         newItem3.title = "Interview Practice"
         itemArray.append(newItem3)
         
-//        if let items = defaults.array(forKey: "ItemArray") as? [String] {
-//            itemArray = items
-//        }
+        if let items = defaults.array(forKey: "ItemArray") as? [Item] {
+            itemArray = items
+        }
     }
 
     // MARK: - Add new items
