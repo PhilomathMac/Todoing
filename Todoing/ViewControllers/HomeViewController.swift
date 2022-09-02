@@ -43,3 +43,25 @@ extension HomeViewController {
     }
     
 }
+
+// MARK: TableView Delegate
+
+extension HomeViewController {
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        // Check or uncheck cell when clicked
+        if cell?.accessoryType == .checkmark {
+            cell?.accessoryType = .none
+        }
+        else {
+            cell?.accessoryType = .checkmark
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
+    
+}
