@@ -9,15 +9,27 @@ import UIKit
 
 class HomeViewController: UITableViewController {
 
-    var itemArray = ["Coding", "Interview Questions", "Shopping"]
+    var itemArray = [Item]()
     
     let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let items = defaults.array(forKey: "ItemArray") as? [String] {
-            itemArray = items
-        }
+        
+        // MOCK DATA
+        let newItem = Item()
+        newItem.title = "Coding"
+        itemArray.append(newItem)
+        let newItem2 = Item()
+        newItem2.title = "Shopping"
+        itemArray.append(newItem2)
+        let newItem3 = Item()
+        newItem3.title = "Interview Practice"
+        itemArray.append(newItem3)
+        
+//        if let items = defaults.array(forKey: "ItemArray") as? [String] {
+//            itemArray = items
+//        }
     }
 
     // MARK: - Add new items
@@ -31,9 +43,12 @@ class HomeViewController: UITableViewController {
             
             // Check new item is valid
             guard textField.text != "" else {return}
-            guard let newItem = textField.text?.trimmingCharacters(in: .newlines) else { return }
+            guard let newTask = textField.text?.trimmingCharacters(in: .newlines) else { return }
             
             // Add new item
+            let newItem = Item()
+            newItem.title = newTask
+            
             self.itemArray.append(newItem)
             self.defaults.set(self.itemArray, forKey: "ItemArray")
             
@@ -70,9 +85,11 @@ extension HomeViewController {
         
         // Dequeue a Cell
         let newCell = tableView.dequeueReusableCell(withIdentifier: "ListNameCell", for: indexPath)
+        let task = itemArray[indexPath.row]
         
         // Setup Cell
-        newCell.textLabel?.text = itemArray[indexPath.row]
+        newCell.textLabel?.text = task.title
+        newCell.accessoryType = task.done ? .checkmark : .none
         
         // Return cell
         return newCell
@@ -87,16 +104,12 @@ extension HomeViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let cell = tableView.cellForRow(at: indexPath)
+        let task = itemArray[indexPath.row]
         
-        // Check or uncheck cell when clicked
-        if cell?.accessoryType == .checkmark {
-            cell?.accessoryType = .none
-        }
-        else {
-            cell?.accessoryType = .checkmark
-        }
+        // Toggle task's done property when clicked
+        task.done.toggle()
         
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
