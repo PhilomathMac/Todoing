@@ -9,17 +9,45 @@ import UIKit
 
 class HomeViewController: UITableViewController {
 
-    let itemArray = ["Coding", "Interview Questions", "Shopping"]
+    var itemArray = ["Coding", "Interview Questions", "Shopping"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
 
-
+    // MARK: - Add new items
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Todoing Item", message: "", preferredStyle: .alert)
+        
+        let addAction = UIAlertAction(title: "Add Item", style: .default) { action in
+            
+            // Add new item
+            guard textField.text != "" else {return}
+            guard let newItem = textField.text?.trimmingCharacters(in: .newlines) else { return }
+            self.itemArray.append(newItem)
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        // Setup alert with a textField
+        alert.addTextField { alertTextField in
+            
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+            
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(addAction)
+        present(alert, animated: true)
+    }
+    
 }
 
-// MARK: TableView DataSource
+// MARK: - TableView DataSource
 
 extension HomeViewController {
     
@@ -44,7 +72,7 @@ extension HomeViewController {
     
 }
 
-// MARK: TableView Delegate
+// MARK: - TableView Delegate
 
 extension HomeViewController {
     
@@ -65,3 +93,5 @@ extension HomeViewController {
     }
     
 }
+
+
