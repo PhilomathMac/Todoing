@@ -11,9 +11,13 @@ class HomeViewController: UITableViewController {
 
     var itemArray = ["Coding", "Interview Questions", "Shopping"]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if let items = defaults.array(forKey: "ItemArray") as? [String] {
+            itemArray = items
+        }
     }
 
     // MARK: - Add new items
@@ -25,10 +29,15 @@ class HomeViewController: UITableViewController {
         
         let addAction = UIAlertAction(title: "Add Item", style: .default) { action in
             
-            // Add new item
+            // Check new item is valid
             guard textField.text != "" else {return}
             guard let newItem = textField.text?.trimmingCharacters(in: .newlines) else { return }
+            
+            // Add new item
             self.itemArray.append(newItem)
+            self.defaults.set(self.itemArray, forKey: "ItemArray")
+            
+            // Reload Data
             self.tableView.reloadData()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
