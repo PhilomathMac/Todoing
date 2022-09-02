@@ -1,7 +1,7 @@
 # Todoing
 
 <p align="center">
-  <img src="https://github.com/PhilomathMac/destini/blob/main/PortfolioImage.png?raw=true" alt="destini screenshot" width="200"/>
+  <img src="https://github.com/PhilomathMac/todoing/blob/main/PortfolioImage.png?raw=true" alt="todoing screenshot" width="100%"/>
 </p>
 
 ## Description
