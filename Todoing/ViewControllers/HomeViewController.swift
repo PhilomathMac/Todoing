@@ -11,11 +11,11 @@ class HomeViewController: UITableViewController {
 
     var itemArray = [Item]()
     
-    let defaults = UserDefaults.standard
-    
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         // MOCK DATA
         let newItem = Item()
         newItem.title = "Coding"
@@ -27,12 +27,26 @@ class HomeViewController: UITableViewController {
         newItem3.title = "Interview Practice"
         itemArray.append(newItem3)
         
-        if let items = defaults.array(forKey: "ItemArray") as? [Item] {
-            itemArray = items
-        }
+//        if let items = defaults.array(forKey: "ItemArray") as? [Item] {
+//            itemArray = items
+//        }
     }
 
     // MARK: - Add new items
+    func saveItems() {
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(self.itemArray)
+            try data.write(to: self.dataFilePath!)
+        } catch  {
+            print("Error encoding item array: \(error.localizedDescription)")
+        }
+        
+        // Reload Data
+        self.tableView.reloadData()
+    }
+    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
@@ -50,10 +64,8 @@ class HomeViewController: UITableViewController {
             newItem.title = newTask
             
             self.itemArray.append(newItem)
-            self.defaults.set(self.itemArray, forKey: "ItemArray")
             
-            // Reload Data
-            self.tableView.reloadData()
+            self.saveItems()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
@@ -108,6 +120,7 @@ extension HomeViewController {
         
         // Toggle task's done property when clicked
         task.done.toggle()
+        self.saveItems()
         
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
