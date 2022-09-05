@@ -6,12 +6,16 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeViewController: UITableViewController {
     // MARK: - Properties
     var itemArray = [Item]()
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
     
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
@@ -28,18 +32,17 @@ class HomeViewController: UITableViewController {
         newItem3.title = "Interview Practice"
         itemArray.append(newItem3)
         
-        loadItems()
+//        loadItems()
     }
 
     // MARK: - Item Management Methods
     func saveItems() {
-        let encoder = PropertyListEncoder()
         
         do {
-            let data = try encoder.encode(self.itemArray)
-            try data.write(to: self.dataFilePath!)
+            try context.save()
+
         } catch  {
-            print("Error encoding item array: \(error.localizedDescription)")
+            print("Error saving context: \(error.localizedDescription)")
         }
         
         // Reload Data
@@ -47,19 +50,19 @@ class HomeViewController: UITableViewController {
     }
     
     // MARK: - Load Items
-    func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            
-            let decoder = PropertyListDecoder()
-            
-            do {
-            itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                print("Error decoding plist: \(error.localizedDescription)")
-            }
-        }
-    }
-    
+//    func loadItems() {
+//        if let data = try? Data(contentsOf: dataFilePath!) {
+//
+//            let decoder = PropertyListDecoder()
+//
+//            do {
+//            itemArray = try decoder.decode([Item].self, from: data)
+//            } catch {
+//                print("Error decoding plist: \(error.localizedDescription)")
+//            }
+//        }
+//    }
+//
     // MARK: - Actions
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -74,8 +77,9 @@ class HomeViewController: UITableViewController {
             guard let newTask = textField.text?.trimmingCharacters(in: .newlines) else { return }
             
             // Add new item
-            let newItem = Item()
+            let newItem = Item(context: self.context)
             newItem.title = newTask
+            newItem.done = false
             
             self.itemArray.append(newItem)
             
