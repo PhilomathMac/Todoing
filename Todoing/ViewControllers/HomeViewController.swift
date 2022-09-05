@@ -27,9 +27,7 @@ class HomeViewController: UITableViewController {
         newItem3.title = "Interview Practice"
         itemArray.append(newItem3)
         
-//        if let items = defaults.array(forKey: "ItemArray") as? [Item] {
-//            itemArray = items
-//        }
+        loadItems()
     }
 
     // MARK: - Add new items
@@ -45,6 +43,19 @@ class HomeViewController: UITableViewController {
         
         // Reload Data
         self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            
+            let decoder = PropertyListDecoder()
+            
+            do {
+            itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error decoding plist: \(error.localizedDescription)")
+            }
+        }
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
