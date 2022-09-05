@@ -8,11 +8,12 @@
 import UIKit
 
 class HomeViewController: UITableViewController {
-
+    // MARK: - Properties
     var itemArray = [Item]()
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-        
+    
+    // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -30,7 +31,7 @@ class HomeViewController: UITableViewController {
         loadItems()
     }
 
-    // MARK: - Add new items
+    // MARK: - Item Management Methods
     func saveItems() {
         let encoder = PropertyListEncoder()
         
@@ -45,6 +46,7 @@ class HomeViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    // MARK: - Load Items
     func loadItems() {
         if let data = try? Data(contentsOf: dataFilePath!) {
             
@@ -58,6 +60,7 @@ class HomeViewController: UITableViewController {
         }
     }
     
+    // MARK: - Actions
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
