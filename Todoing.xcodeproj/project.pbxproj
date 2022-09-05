@@ -13,7 +13,6 @@
 		BA4856D928C270DC004BEC19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA4856D728C270DC004BEC19 /* Main.storyboard */; };
 		BA4856DB28C270E7004BEC19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA4856DA28C270E7004BEC19 /* Assets.xcassets */; };
 		BA4856DE28C270E7004BEC19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA4856DC28C270E7004BEC19 /* LaunchScreen.storyboard */; };
-		BAD66A3628C29EE4006E9329 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD66A3528C29EE3006E9329 /* Item.swift */; };
 		BB579C7428C6AFD800C7515A /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BB579C7228C6AFD800C7515A /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +25,6 @@
 		BA4856DA28C270E7004BEC19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA4856DD28C270E7004BEC19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA4856DF28C270E7004BEC19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BAD66A3528C29EE3006E9329 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BB579C7328C6AFD800C7515A /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,7 +89,6 @@
 		BA4856E728C272F1004BEC19 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BAD66A3528C29EE3006E9329 /* Item.swift */,
 				BB579C7228C6AFD800C7515A /* DataModel.xcdatamodeld */,
 			);
 			path = Models;
@@ -168,7 +165,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAD66A3628C29EE4006E9329 /* Item.swift in Sources */,
 				BB579C7428C6AFD800C7515A /* DataModel.xcdatamodeld in Sources */,
 				BA4856D628C270DC004BEC19 /* HomeViewController.swift in Sources */,
 				BA4856D228C270DB004BEC19 /* AppDelegate.swift in Sources */,
