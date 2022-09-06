@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  ItemsViewController.swift
 //  Todoing
 //
 //  Created by McKenzie Macdonald on 9/2/22.
@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class HomeViewController: UITableViewController {
+class ItemsViewController: UITableViewController {
     // MARK: - Properties
     var itemArray = [Item]()
     
@@ -90,7 +90,7 @@ class HomeViewController: UITableViewController {
 
 // MARK: - TableView DataSource
 
-extension HomeViewController {
+extension ItemsViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -117,7 +117,7 @@ extension HomeViewController {
 
 // MARK: - TableView Delegate
 
-extension HomeViewController {
+extension ItemsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -146,7 +146,7 @@ extension HomeViewController {
 
 // MARK: - SearchBar Delegate
 
-extension HomeViewController: UISearchBarDelegate {
+extension ItemsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
