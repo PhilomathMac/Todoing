@@ -34,7 +34,7 @@ class ListsTableViewController: UITableViewController {
             // Add list to array
             self.listsArray.append(newList)
             
-            self.loadLists()
+            self.saveLists()
             
         }
         
@@ -60,6 +60,19 @@ extension ListsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listsArray.count
     }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // Deque Cell
+        let newCell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath)
+        let list = listsArray[indexPath.row]
+        
+        // Setup Cell
+        newCell.textLabel?.text = list.name
+        
+        // Return Cell
+        return newCell
+    }
 }
 
 // MARK: - TableView Delegate
@@ -76,7 +89,7 @@ extension ListsTableViewController {
 // MARK: - Data Manipulation Methods
 extension ListsTableViewController {
     
-    func addLists() {
+    func saveLists() {
        
         do {
             try context.save()

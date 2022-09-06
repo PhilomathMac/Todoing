@@ -101,7 +101,7 @@ extension ItemsViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Dequeue a Cell
-        let newCell = tableView.dequeueReusableCell(withIdentifier: "ListNameCell", for: indexPath)
+        let newCell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
         let task = itemArray[indexPath.row]
         
         // Setup Cell
