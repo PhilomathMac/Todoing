@@ -166,6 +166,29 @@ extension HomeViewController: UISearchBarDelegate {
         // Reload tableview using search text
         tableView.reloadData()
         
+        // Dismiss keyboard
+        DispatchQueue.main.async {
+            searchBar.resignFirstResponder()
+        }
+        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        loadItems()
+        DispatchQueue.main.async {
+            searchBar.resignFirstResponder()
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+            
+        }
     }
 }
 
