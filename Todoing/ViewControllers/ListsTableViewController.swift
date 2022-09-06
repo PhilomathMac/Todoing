@@ -15,12 +15,40 @@ class ListsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadItems()
+        loadLists()
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add New List", message: nil, preferredStyle: .alert)
         
+        let addAction = UIAlertAction(title: "Add List", style: .default) { action in
+            // Validate list name
+            guard let listName = textField.text?.trimmingCharacters(in: .newlines) else { return }
+            
+            // Create list
+            let newList = List(context: self.context)
+            newList.name = listName
+            
+            // Add list to array
+            self.listsArray.append(newList)
+            
+            self.loadLists()
+            
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        // Add textField to alert
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "Add new list"
+            textField = alertTextField
+        }
+        
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
 
 }
@@ -48,7 +76,7 @@ extension ListsTableViewController {
 // MARK: - Data Manipulation Methods
 extension ListsTableViewController {
     
-    func addItems() {
+    func addLists() {
        
         do {
             try context.save()
@@ -60,7 +88,7 @@ extension ListsTableViewController {
         
     }
     
-    func loadItems(with request: NSFetchRequest<List> = List.fetchRequest()) {
+    func loadLists(with request: NSFetchRequest<List> = List.fetchRequest()) {
         do {
             listsArray = try context.fetch(request)
         } catch {
