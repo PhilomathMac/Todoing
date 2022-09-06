@@ -38,15 +38,15 @@ class HomeViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadItems() {
-        
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
-        
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+            
         do {
            itemArray = try context.fetch(request)
         } catch {
             print("Error fetching data from core data: \(error)")
         }
+        
+        tableView.reloadData()
         
     }
 
@@ -142,6 +142,31 @@ extension HomeViewController {
     }
     
     
+}
+
+// MARK: - SearchBar Delegate
+
+extension HomeViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        // Query Core Data
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        guard let searchString = searchBar.text else { return }
+        // Predicate specifies how data should be fetched or filtered -> Query Language
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchString)
+                
+        // Sort data retrieved
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        // Run request and fetch results
+        loadItems(with: request)
+        
+        // Reload tableview using search text
+        tableView.reloadData()
+        
+    }
 }
 
 
