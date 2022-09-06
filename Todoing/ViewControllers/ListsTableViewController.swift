@@ -23,7 +23,9 @@ class ListsTableViewController: UITableViewController {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New List", message: nil, preferredStyle: .alert)
         
+        // Create actions
         let addAction = UIAlertAction(title: "Add List", style: .default) { action in
+            
             // Validate list name
             guard let listName = textField.text?.trimmingCharacters(in: .newlines) else { return }
             
@@ -46,8 +48,11 @@ class ListsTableViewController: UITableViewController {
             textField = alertTextField
         }
         
+        // Add actions
         alert.addAction(addAction)
         alert.addAction(cancelAction)
+        
+        // Show alert
         present(alert, animated: true)
     }
 
@@ -63,7 +68,7 @@ extension ListsTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // Deque Cell
+        // Dequeue Cell
         let newCell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath)
         let list = listsArray[indexPath.row]
         
