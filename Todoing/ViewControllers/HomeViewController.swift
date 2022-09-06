@@ -24,7 +24,7 @@ class HomeViewController: UITableViewController {
         loadItems()
     }
 
-    // MARK: - Item Management Methods
+    // MARK: - Data Model Management Methods
     func saveItems() {
         
         do {
@@ -38,7 +38,6 @@ class HomeViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    // MARK: - Load Items
     func loadItems() {
         
         let request : NSFetchRequest<Item> = Item.fetchRequest()
@@ -122,11 +121,13 @@ extension HomeViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let task = itemArray[indexPath.row]
+        let item = itemArray[indexPath.row]
         
         // Toggle task's done property when clicked
-        task.done.toggle()
+        item.done.toggle()
+        item.setValue("Completed", forKey: "title")
         self.saveItems()
+    
         
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
