@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Lists Table View Controller-->
+        <!--Todoing-->
         <scene sceneID="35e-GH-69F">
             <objects>
                 <tableViewController id="geY-8c-JXy" customClass="ListsTableViewController" customModule="Todoing" customModuleProvider="target" sceneMemberID="viewController">
@@ -30,7 +30,13 @@
                             <outlet property="delegate" destination="geY-8c-JXy" id="QO4-u1-LNK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="kKW-ex-sYa"/>
+                    <navigationItem key="navigationItem" title="Todoing" id="kKW-ex-sYa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="uZa-Mg-kXT">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="geY-8c-JXy" id="zdS-bZ-sTH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="JBh-5X-FQl" kind="show" identifier="goToItems" id="aD6-cf-kJq"/>
                     </connections>
@@ -39,7 +45,7 @@
             </objects>
             <point key="canvasLocation" x="642" y="76"/>
         </scene>
-        <!--Todoing-->
+        <!--Items-->
         <scene sceneID="Q2S-Yr-xAa">
             <objects>
                 <tableViewController id="JBh-5X-FQl" customClass="ItemsViewController" customModule="Todoing" customModuleProvider="target" sceneMemberID="viewController">
@@ -70,7 +76,7 @@
                             <outlet property="delegate" destination="JBh-5X-FQl" id="VfQ-AE-q7j"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todoing" id="cTS-Ws-EDT">
+                    <navigationItem key="navigationItem" title="Items" id="cTS-Ws-EDT">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="TTZ-Oy-aPb">
                             <connections>
                                 <action selector="addButtonPressed:" destination="JBh-5X-FQl" id="Ije-LE-tVD"/>
