@@ -125,7 +125,14 @@ extension HomeViewController {
         
         // Toggle task's done property when clicked
         item.done.toggle()
-        item.setValue("Completed", forKey: "title")
+        
+        // Update a value
+//        item.setValue("Completed", forKey: "title")
+        
+        // Deleting a value
+//        context.delete(itemArray[indexPath.row])
+//        itemArray.remove(at: indexPath.row)
+        
         self.saveItems()
     
         
@@ -133,6 +140,7 @@ extension HomeViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
+    
     
 }
 
