@@ -20,19 +20,8 @@ class HomeViewController: UITableViewController {
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        // MOCK DATA
-        let newItem = Item()
-        newItem.title = "Coding"
-        itemArray.append(newItem)
-        let newItem2 = Item()
-        newItem2.title = "Shopping"
-        itemArray.append(newItem2)
-        let newItem3 = Item()
-        newItem3.title = "Interview Practice"
-        itemArray.append(newItem3)
         
-//        loadItems()
+        loadItems()
     }
 
     // MARK: - Item Management Methods
@@ -50,19 +39,18 @@ class HomeViewController: UITableViewController {
     }
     
     // MARK: - Load Items
-//    func loadItems() {
-//        if let data = try? Data(contentsOf: dataFilePath!) {
-//
-//            let decoder = PropertyListDecoder()
-//
-//            do {
-//            itemArray = try decoder.decode([Item].self, from: data)
-//            } catch {
-//                print("Error decoding plist: \(error.localizedDescription)")
-//            }
-//        }
-//    }
-//
+    func loadItems() {
+        
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        do {
+           itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from core data: \(error)")
+        }
+        
+    }
+
     // MARK: - Actions
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
