@@ -11,6 +11,12 @@ import CoreData
 class ItemsViewController: UITableViewController {
     // MARK: - Properties
     var itemArray = [Item]()
+    var selectedList : List? {
+        // Initialize itemArray
+        didSet {
+            loadItems()
+        }
+    }
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
@@ -21,7 +27,6 @@ class ItemsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadItems()
     }
 
     // MARK: - Data Model Management Methods
@@ -38,8 +43,16 @@ class ItemsViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
-            
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), and predicate: NSPredicate? = nil) {
+        
+        let listPredicate = NSPredicate(format: "parentList.name MATCHES %@", selectedList!.name!)
+
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [listPredicate, additionalPredicate])
+        } else {
+            request.predicate = listPredicate
+        }
+        
         do {
            itemArray = try context.fetch(request)
         } catch {
@@ -67,6 +80,7 @@ class ItemsViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = newTask
             newItem.done = false
+            newItem.parentList = self.selectedList
             
             self.itemArray.append(newItem)
             
@@ -154,14 +168,15 @@ extension ItemsViewController: UISearchBarDelegate {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
         guard let searchString = searchBar.text else { return }
+        
         // Predicate specifies how data should be fetched or filtered -> Query Language
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchString)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchString)
                 
         // Sort data retrieved
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
         // Run request and fetch results
-        loadItems(with: request)
+        loadItems(with: request, and: predicate)
         
         // Reload tableview using search text
         tableView.reloadData()
