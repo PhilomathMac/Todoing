@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print("Error creating realm: \(error.localizedDescription)")
         }
+        
         return true
     }
 
