@@ -7,15 +7,18 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class ListsTableViewController: UITableViewController {
     
-    var listsArray = [List]()
+    let realm = try! Realm()
+    
+    var listsArray = [UserList]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadLists()
+//        loadLists()
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -30,13 +33,13 @@ class ListsTableViewController: UITableViewController {
             guard let listName = textField.text?.trimmingCharacters(in: .newlines) else { return }
             
             // Create list
-            let newList = List(context: self.context)
+            let newList = UserList()
             newList.name = listName
             
             // Add list to array
             self.listsArray.append(newList)
             
-            self.saveLists()
+            self.saveList(newList)
             
         }
         
@@ -95,7 +98,7 @@ extension ListsTableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             
-            destinationVC.selectedList = listsArray[indexPath.row]
+//            destinationVC.selectedList = listsArray[indexPath.row]
         }
     }
     
@@ -104,10 +107,12 @@ extension ListsTableViewController {
 // MARK: - Data Manipulation Methods
 extension ListsTableViewController {
     
-    func saveLists() {
+    func saveList(_ userList: UserList) {
        
         do {
-            try context.save()
+            try realm.write {
+                realm.add(userList)
+            }
         } catch {
             print("Error saving list: \(error.localizedDescription)")
         }
@@ -116,14 +121,14 @@ extension ListsTableViewController {
         
     }
     
-    func loadLists(with request: NSFetchRequest<List> = List.fetchRequest()) {
-        do {
-            listsArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data: \(error.localizedDescription)")
-        }
-        
-        tableView.reloadData()
-    }
+//    func loadLists(with request: NSFetchRequest<List> = List.fetchRequest()) {
+//        do {
+//            listsArray = try context.fetch(request)
+//        } catch {
+//            print("Error fetching data: \(error.localizedDescription)")
+//        }
+//
+//        tableView.reloadData()
+//    }
     
 }

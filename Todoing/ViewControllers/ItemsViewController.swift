@@ -11,12 +11,12 @@ import CoreData
 class ItemsViewController: UITableViewController {
     // MARK: - Properties
     var itemArray = [Item]()
-    var selectedList : List? {
-        // Initialize itemArray
-        didSet {
-            loadItems()
-        }
-    }
+//    var selectedList : List? {
+//        // Initialize itemArray
+//        didSet {
+//            loadItems()
+//        }
+//    }
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
@@ -43,25 +43,25 @@ class ItemsViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), and predicate: NSPredicate? = nil) {
-        
-        let listPredicate = NSPredicate(format: "parentList.name MATCHES %@", selectedList!.name!)
-
-        if let additionalPredicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [listPredicate, additionalPredicate])
-        } else {
-            request.predicate = listPredicate
-        }
-        
-        do {
-           itemArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from core data: \(error)")
-        }
-        
-        tableView.reloadData()
-        
-    }
+//    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), and predicate: NSPredicate? = nil) {
+//
+//        let listPredicate = NSPredicate(format: "parentList.name MATCHES %@", selectedList!.name!)
+//
+//        if let additionalPredicate = predicate {
+//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [listPredicate, additionalPredicate])
+//        } else {
+//            request.predicate = listPredicate
+//        }
+//
+//        do {
+//           itemArray = try context.fetch(request)
+//        } catch {
+//            print("Error fetching data from core data: \(error)")
+//        }
+//
+//        tableView.reloadData()
+//
+//    }
 
     // MARK: - Actions
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -77,12 +77,12 @@ class ItemsViewController: UITableViewController {
             guard let newTask = textField.text?.trimmingCharacters(in: .newlines) else { return }
             
             // Add new item
-            let newItem = Item(context: self.context)
-            newItem.title = newTask
-            newItem.done = false
-            newItem.parentList = self.selectedList
+//            let newItem = Item(context: self.context)
+//            newItem.title = newTask
+//            newItem.done = false
+//            newItem.parentList = self.selectedList
             
-            self.itemArray.append(newItem)
+//            self.itemArray.append(newItem)
             
             self.saveItems()
         }
@@ -165,7 +165,7 @@ extension ItemsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         // Query Core Data
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
+//        let request : NSFetchRequest<Item> = Item.fetchRequest()
         
         guard let searchString = searchBar.text else { return }
         
@@ -173,10 +173,10 @@ extension ItemsViewController: UISearchBarDelegate {
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchString)
                 
         // Sort data retrieved
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
         // Run request and fetch results
-        loadItems(with: request, and: predicate)
+//        loadItems(with: request, and: predicate)
         
         // Reload tableview using search text
         tableView.reloadData()
@@ -189,7 +189,7 @@ extension ItemsViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        loadItems()
+//        loadItems()
         DispatchQueue.main.async {
             searchBar.resignFirstResponder()
         }
@@ -197,7 +197,7 @@ extension ItemsViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
-            loadItems()
+//            loadItems()
             
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
