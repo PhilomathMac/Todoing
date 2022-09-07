@@ -56,6 +56,7 @@ class ItemsViewController: UITableViewController {
                 try self.realm.write({
                     let newItem = Item()
                     newItem.title = newTask
+                    newItem.dateCreated = Date()
                     currentList.items.append(newItem)
                 })
             } catch {
@@ -119,6 +120,8 @@ extension ItemsViewController {
             do {
                 try realm.write({
                     item.done = !item.done
+                    // delete item instead
+                    // realm.delete(item)
                 })
             } catch {
                 print("Error toggling done: \(error.localizedDescription)")
@@ -139,19 +142,9 @@ extension ItemsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        // Query Core Data
-//        let request : NSFetchRequest<Item> = Item.fetchRequest()
-        
         guard let searchString = searchBar.text else { return }
         
-        // Predicate specifies how data should be fetched or filtered -> Query Language
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchString)
-                
-        // Sort data retrieved
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        
-        // Run request and fetch results
-//        loadItems(with: request, and: predicate)
+        items = items?.filter("title CONTAINS[cd] %@", searchString).sorted(byKeyPath: "title", ascending: true)
         
         // Reload tableview using search text
         tableView.reloadData()
@@ -164,7 +157,7 @@ extension ItemsViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        loadItems()
+        loadItems()
         DispatchQueue.main.async {
             searchBar.resignFirstResponder()
         }
@@ -172,7 +165,7 @@ extension ItemsViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
-//            loadItems()
+            loadItems()
             
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
