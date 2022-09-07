@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,7 +14,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                
+        
+        //DEBUG PRINT STATEMENT
+        // print(Realm.Configuration.defaultConfiguration.fileURL)
+        
+        // Create new realm (like a persistent container)
+        do {
+            let _ = try Realm()
+        } catch {
+            print("Error creating realm: \(error.localizedDescription)")
+        }
+        
         return true
     }
 
@@ -31,43 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-    // MARK: - Core Data stack
-    // lazy variables only get loaded with a value when it's needed - memory benefit
-    // NSPersistentContainer default is a SQLight database
-    lazy var persistentContainer: NSPersistentContainer = {
-
-        let container = NSPersistentContainer(name: "DataModel")
-        
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        
-        return container
-        
-    }()
-
-    // MARK: - Core Data Saving support
-
-    func saveContext () {
-        
-        // Context is like the staging area for editing data before committing it to the persistent container
-        let context = persistentContainer.viewContext
-        
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-
 
 }
 

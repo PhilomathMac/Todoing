@@ -6,21 +6,19 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class ItemsViewController: UITableViewController {
     // MARK: - Properties
-    var itemArray = [Item]()
-    var selectedList : List? {
-        // Initialize itemArray
+    var items: Results<Item>?
+    
+    var selectedList : UserList? {
+        // Initialize items
         didSet {
             loadItems()
         }
     }
-    
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let realm = try! Realm()
 
     
     // MARK: - Life Cycle Methods
@@ -30,37 +28,13 @@ class ItemsViewController: UITableViewController {
     }
 
     // MARK: - Data Model Management Methods
-    func saveItems() {
-        
-        do {
-            try context.save()
-
-        } catch  {
-            print("Error saving context: \(error.localizedDescription)")
-        }
-        
-        // Reload Data
-        self.tableView.reloadData()
-    }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), and predicate: NSPredicate? = nil) {
-        
-        let listPredicate = NSPredicate(format: "parentList.name MATCHES %@", selectedList!.name!)
+    func loadItems() {
 
-        if let additionalPredicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [listPredicate, additionalPredicate])
-        } else {
-            request.predicate = listPredicate
-        }
-        
-        do {
-           itemArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from core data: \(error)")
-        }
-        
+        items = selectedList?.items.sorted(byKeyPath: "title", ascending: true)
+
         tableView.reloadData()
-        
+
     }
 
     // MARK: - Actions
@@ -72,20 +46,27 @@ class ItemsViewController: UITableViewController {
         
         let addAction = UIAlertAction(title: "Add Item", style: .default) { action in
             
-            // Check new item is valid
+            // Check validity of newTask and currentList
             guard textField.text != "" else {return}
             guard let newTask = textField.text?.trimmingCharacters(in: .newlines) else { return }
+            guard let currentList = self.selectedList else { return }
             
-            // Add new item
-            let newItem = Item(context: self.context)
-            newItem.title = newTask
-            newItem.done = false
-            newItem.parentList = self.selectedList
+            // Add new item to database
+            do {
+                try self.realm.write({
+                    let newItem = Item()
+                    newItem.title = newTask
+                    newItem.dateCreated = Date()
+                    currentList.items.append(newItem)
+                })
+            } catch {
+                print("Error saving to realm database: \(error.localizedDescription)")
+            }
             
-            self.itemArray.append(newItem)
-            
-            self.saveItems()
+            // Reload Data
+            self.tableView.reloadData()
         }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         // Setup alert with a textField
@@ -108,7 +89,7 @@ extension ItemsViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return itemArray.count
+        return items?.count ?? 1
         
     }
     
@@ -116,7 +97,7 @@ extension ItemsViewController {
         
         // Dequeue a Cell
         let newCell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
-        let task = itemArray[indexPath.row]
+        let task = items?[indexPath.row] ?? Item()
         
         // Setup Cell
         newCell.textLabel?.text = task.title
@@ -135,20 +116,17 @@ extension ItemsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let item = itemArray[indexPath.row]
-        
-        // Toggle task's done property when clicked
-        item.done.toggle()
-        
-        // Update a value
-//        item.setValue("Completed", forKey: "title")
-        
-        // Deleting a value
-//        context.delete(itemArray[indexPath.row])
-//        itemArray.remove(at: indexPath.row)
-        
-        self.saveItems()
-    
+        if let item = items?[indexPath.row] {
+            do {
+                try realm.write({
+                    item.done = !item.done
+                    // delete item instead
+                    // realm.delete(item)
+                })
+            } catch {
+                print("Error toggling done: \(error.localizedDescription)")
+            }
+        }
         
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
@@ -164,19 +142,9 @@ extension ItemsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        // Query Core Data
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
-        
         guard let searchString = searchBar.text else { return }
         
-        // Predicate specifies how data should be fetched or filtered -> Query Language
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchString)
-                
-        // Sort data retrieved
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        
-        // Run request and fetch results
-        loadItems(with: request, and: predicate)
+        items = items?.filter("title CONTAINS[cd] %@", searchString).sorted(byKeyPath: "title", ascending: true)
         
         // Reload tableview using search text
         tableView.reloadData()
