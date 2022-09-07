@@ -13,12 +13,11 @@ class ListsTableViewController: UITableViewController {
     
     let realm = try! Realm()
     
-    var listsArray = [UserList]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var lists: Results<UserList>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        loadLists()
+        loadLists()
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -35,9 +34,6 @@ class ListsTableViewController: UITableViewController {
             // Create list
             let newList = UserList()
             newList.name = listName
-            
-            // Add list to array
-            self.listsArray.append(newList)
             
             self.saveList(newList)
             
@@ -66,17 +62,16 @@ class ListsTableViewController: UITableViewController {
 extension ListsTableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listsArray.count
+        return lists?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Dequeue Cell
         let newCell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath)
-        let list = listsArray[indexPath.row]
         
         // Setup Cell
-        newCell.textLabel?.text = list.name
+        newCell.textLabel?.text = lists?[indexPath.row].name ?? "No lists added yet"
         
         // Return Cell
         return newCell
@@ -98,7 +93,8 @@ extension ListsTableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             
-//            destinationVC.selectedList = listsArray[indexPath.row]
+            destinationVC.selectedList = lists?[indexPath.row]
+            
         }
     }
     
@@ -121,14 +117,11 @@ extension ListsTableViewController {
         
     }
     
-//    func loadLists(with request: NSFetchRequest<List> = List.fetchRequest()) {
-//        do {
-//            listsArray = try context.fetch(request)
-//        } catch {
-//            print("Error fetching data: \(error.localizedDescription)")
-//        }
-//
-//        tableView.reloadData()
-//    }
+    func loadLists() {
+
+        lists = realm.objects(UserList.self)
+
+        tableView.reloadData()
+    }
     
 }

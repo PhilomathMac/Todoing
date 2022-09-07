@@ -11,12 +11,12 @@ import CoreData
 class ItemsViewController: UITableViewController {
     // MARK: - Properties
     var itemArray = [Item]()
-//    var selectedList : List? {
-//        // Initialize itemArray
-//        didSet {
+    var selectedList : UserList? {
+        // Initialize itemArray
+        didSet {
 //            loadItems()
-//        }
-//    }
+        }
+    }
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
