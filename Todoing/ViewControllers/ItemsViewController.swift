@@ -115,20 +115,15 @@ extension ItemsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        let item = items[indexPath.row]
-        
-        // Toggle task's done property when clicked
-//        item.done.toggle()
-        
-        // Update a value
-//        item.setValue("Completed", forKey: "title")
-        
-        // Deleting a value
-//        context.delete(items[indexPath.row])
-//        items.remove(at: indexPath.row)
-        
-//        self.saveItem(item)
-    
+        if let item = items?[indexPath.row] {
+            do {
+                try realm.write({
+                    item.done = !item.done
+                })
+            } catch {
+                print("Error toggling done: \(error.localizedDescription)")
+            }
+        }
         
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
