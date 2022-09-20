@@ -17,6 +17,7 @@ class ListsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = 75.0
         loadLists()
     }
     
@@ -68,9 +69,10 @@ extension ListsTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Dequeue Cell
-        let newCell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath)
+        let newCell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! SwipeTableViewCell
         
         // Setup Cell
+        newCell.delegate = self
         newCell.textLabel?.text = lists?[indexPath.row].name ?? "No lists added yet"
         
         // Return Cell
@@ -122,6 +124,29 @@ extension ListsTableViewController {
         lists = realm.objects(UserList.self)
 
         tableView.reloadData()
+    }
+    
+}
+
+// MARK: - SwipeTableViewCell Delegate
+
+extension ListsTableViewController: SwipeTableViewCellDelegate {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeCellKit.SwipeActionsOrientation) -> [SwipeCellKit.SwipeAction]? {
+        
+        // Check orientation of the swipe
+        guard orientation == .right else { return nil }
+
+            let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+                // TODO: handle action by updating model with deletion
+                print("Item deleted")
+            }
+
+            // customize the action appearance
+            deleteAction.image = UIImage(systemName: "trash")
+
+            return [deleteAction]
+        
     }
     
 }
