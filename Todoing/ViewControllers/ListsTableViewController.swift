@@ -138,8 +138,19 @@ extension ListsTableViewController: SwipeTableViewCellDelegate {
         guard orientation == .right else { return nil }
 
             let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+                
                 // TODO: handle action by updating model with deletion
-                print("Item deleted")
+                guard let listToDelete = self.lists?[indexPath.row] else { return }
+                
+                do {
+                    try self.realm.write {
+                        self.realm.delete(listToDelete)
+                    }
+                } catch {
+                    print("Error saving deletion: \(error.localizedDescription)")
+                }
+                
+                tableView.reloadData()
             }
 
             // customize the action appearance
