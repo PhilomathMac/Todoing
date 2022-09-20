@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ItemsViewController: UITableViewController {
+class ItemsViewController: SwipeableTableViewController {
     // MARK: - Properties
     var items: Results<Item>?
     
@@ -24,7 +24,7 @@ class ItemsViewController: UITableViewController {
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.rowHeight = 75.0
     }
 
     // MARK: - Data Model Management Methods
@@ -35,6 +35,20 @@ class ItemsViewController: UITableViewController {
 
         tableView.reloadData()
 
+    }
+    
+    // Delete list from swipe
+    override func updateModel(at indexPath: IndexPath) {
+        guard let itemToDelete = self.items?[indexPath.row] else { return }
+        
+        do {
+            try self.realm.write {
+                self.realm.delete(itemToDelete)
+            }
+        } catch {
+            print("Error saving deletion: \(error.localizedDescription)")
+        }
+        
     }
 
     // MARK: - Actions
@@ -95,8 +109,9 @@ extension ItemsViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // Dequeue a Cell
-        let newCell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+        // Get cell from superclass
+        let newCell = super.tableView(tableView, cellForRowAt: indexPath)
+        
         let task = items?[indexPath.row] ?? Item()
         
         // Setup Cell
@@ -120,8 +135,6 @@ extension ItemsViewController {
             do {
                 try realm.write({
                     item.done = !item.done
-                    // delete item instead
-                    // realm.delete(item)
                 })
             } catch {
                 print("Error toggling done: \(error.localizedDescription)")
