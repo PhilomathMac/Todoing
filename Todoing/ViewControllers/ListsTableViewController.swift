@@ -150,13 +150,20 @@ extension ListsTableViewController: SwipeTableViewCellDelegate {
                     print("Error saving deletion: \(error.localizedDescription)")
                 }
                 
-                tableView.reloadData()
             }
 
             // customize the action appearance
             deleteAction.image = UIImage(systemName: "trash")
 
             return [deleteAction]
+        
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
         
     }
     
