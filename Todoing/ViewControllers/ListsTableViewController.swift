@@ -7,9 +7,8 @@
 
 import UIKit
 import RealmSwift
-import SwipeCellKit
 
-class ListsTableViewController: UITableViewController {
+class ListsTableViewController: SwipeableTableViewController {
     
     let realm = try! Realm()
     
@@ -55,6 +54,42 @@ class ListsTableViewController: UITableViewController {
         // Show alert
         present(alert, animated: true)
     }
+    
+    // MARK: - Data Manipulation Methods
+    func saveList(_ userList: UserList) {
+       
+        do {
+            try realm.write {
+                realm.add(userList)
+            }
+        } catch {
+            print("Error saving list: \(error.localizedDescription)")
+        }
+        
+        tableView.reloadData()
+        
+    }
+    
+    func loadLists() {
+
+        lists = realm.objects(UserList.self)
+
+        tableView.reloadData()
+    }
+    
+    // Delete list from swipe
+    override func updateModel(at indexPath: IndexPath) {
+        guard let listToDelete = self.lists?[indexPath.row] else { return }
+        
+        do {
+            try self.realm.write {
+                self.realm.delete(listToDelete)
+            }
+        } catch {
+            print("Error saving deletion: \(error.localizedDescription)")
+        }
+        
+    }
 
 }
 
@@ -68,11 +103,10 @@ extension ListsTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // Dequeue Cell
-        let newCell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! SwipeTableViewCell
+        // Get cell from superclass
+        let newCell = super.tableView(tableView, cellForRowAt: indexPath)
         
         // Setup Cell
-        newCell.delegate = self
         newCell.textLabel?.text = lists?[indexPath.row].name ?? "No lists added yet"
         
         // Return Cell
@@ -98,73 +132,6 @@ extension ListsTableViewController {
             destinationVC.selectedList = lists?[indexPath.row]
             
         }
-    }
-    
-}
-
-// MARK: - Data Manipulation Methods
-extension ListsTableViewController {
-    
-    func saveList(_ userList: UserList) {
-       
-        do {
-            try realm.write {
-                realm.add(userList)
-            }
-        } catch {
-            print("Error saving list: \(error.localizedDescription)")
-        }
-        
-        tableView.reloadData()
-        
-    }
-    
-    func loadLists() {
-
-        lists = realm.objects(UserList.self)
-
-        tableView.reloadData()
-    }
-    
-}
-
-// MARK: - SwipeTableViewCell Delegate
-
-extension ListsTableViewController: SwipeTableViewCellDelegate {
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeCellKit.SwipeActionsOrientation) -> [SwipeCellKit.SwipeAction]? {
-        
-        // Check orientation of the swipe
-        guard orientation == .right else { return nil }
-
-            let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-                
-                // TODO: handle action by updating model with deletion
-                guard let listToDelete = self.lists?[indexPath.row] else { return }
-                
-                do {
-                    try self.realm.write {
-                        self.realm.delete(listToDelete)
-                    }
-                } catch {
-                    print("Error saving deletion: \(error.localizedDescription)")
-                }
-                
-            }
-
-            // customize the action appearance
-            deleteAction.image = UIImage(systemName: "trash")
-
-            return [deleteAction]
-        
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-        
-        var options = SwipeOptions()
-        options.expansionStyle = .destructive
-        return options
-        
     }
     
 }

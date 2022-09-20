@@ -19,6 +19,7 @@
 		BB579CA428C920B800C7515A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB579CA328C920B800C7515A /* Item.swift */; };
 		BB579CA628C920BE00C7515A /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB579CA528C920BE00C7515A /* UserList.swift */; };
 		BB7A429C28D96389006BBC87 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB7A429B28D96389006BBC87 /* SwipeCellKit */; };
+		BB7A429E28DA3EA4006BBC87 /* SwipeableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7A429D28DA3EA4006BBC87 /* SwipeableTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		BACA4D9B28C7ED5000F7179A /* ListsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsTableViewController.swift; sourceTree = "<group>"; };
 		BB579CA328C920B800C7515A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BB579CA528C920BE00C7515A /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
+		BB7A429D28DA3EA4006BBC87 /* SwipeableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			children = (
 				BACA4D9B28C7ED5000F7179A /* ListsTableViewController.swift */,
 				BA4856D528C270DC004BEC19 /* ItemsViewController.swift */,
+				BB7A429D28DA3EA4006BBC87 /* SwipeableTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				BACA4D9C28C7ED5000F7179A /* ListsTableViewController.swift in Sources */,
 				BB579CA628C920BE00C7515A /* UserList.swift in Sources */,
 				BA4856D628C270DC004BEC19 /* ItemsViewController.swift in Sources */,
+				BB7A429E28DA3EA4006BBC87 /* SwipeableTableViewController.swift in Sources */,
 				BA4856D228C270DB004BEC19 /* AppDelegate.swift in Sources */,
 				BB579CA428C920B800C7515A /* Item.swift in Sources */,
 				BA4856D428C270DB004BEC19 /* SceneDelegate.swift in Sources */,
