@@ -120,7 +120,27 @@ extension ItemsViewController {
         
         if let listColor = UIColor(hex: selectedList?.color ?? "00000000") {
             let alphaAmount = 0.1 * Double(indexPath.row)
-            newCell.backgroundColor = UIColor(hex: selectedList?.color ?? "00000000")?.withAlphaComponent(alphaAmount)
+            let cellColor = listColor.withAlphaComponent(alphaAmount)
+            newCell.backgroundColor = cellColor
+            
+            /*
+             PROBLEM CHANGING CELL COLORS - contrast calculated using brightness and brightness does not change when alpha changes
+            //DEBUG:
+            print("CELL \(indexPath.row)")
+            print("CellColor: \(cellColor.accessibilityName)")
+            if cellColor.contrastRatio(withColor: .black) ?? 0 < 10 {
+                //DEBUG:
+                print("Contrast With Black: \(cellColor.contrastRatio(withColor: .black))")
+                newCell.textLabel?.textColor = .white
+            } else if cellColor.contrastRatio(withColor: .white) ?? 0 < 10 {
+                //DEBUG:
+                print("Contrast With White: \(cellColor.contrastRatio(withColor: .white))")
+                newCell.textLabel?.textColor = .black
+            }
+            //DEBUG:
+            print("TextColor: \(newCell.textLabel?.textColor.accessibilityName)")
+             */
+            
         }
         
         // Return cell
