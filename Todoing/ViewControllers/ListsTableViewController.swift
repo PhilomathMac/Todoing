@@ -13,6 +13,9 @@ class ListsTableViewController: SwipeableTableViewController {
     let realm = try! Realm()
     
     var lists: Results<UserList>?
+    
+    var tempHexString = ""
+    var selectedIndexPath: IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +111,18 @@ extension ListsTableViewController {
         
         // Setup Cell
         newCell.textLabel?.text = lists?[indexPath.row].name ?? "No lists added yet"
+        newCell.accessoryType = .detailButton
+        if let cellColor = UIColor(hex: lists?[indexPath.row].color ?? "00000000") {
+            newCell.backgroundColor = cellColor
+
+            if cellColor.contrastRatio(withColor: .black) ?? 0 < 10 {
+                newCell.textLabel?.textColor = .white
+            } else if cellColor.contrastRatio(withColor: .white) ?? 0 < 10 {
+                newCell.textLabel?.textColor = .black
+            }
+        }
         
+
         // Return Cell
         return newCell
     }
@@ -132,6 +146,51 @@ extension ListsTableViewController {
             destinationVC.selectedList = lists?[indexPath.row]
             
         }
+    }
+    
+    // Show color picker
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        selectedIndexPath = indexPath
+        
+        // Present ColorPicker
+        presentColorPicker()
+
+    }
+    
+}
+
+// MARK: - ColorPicker
+
+extension ListsTableViewController: UIColorPickerViewControllerDelegate {
+    
+    @objc func presentColorPicker() {
+        let colorPickerVC = UIColorPickerViewController()
+        colorPickerVC.delegate = self
+        colorPickerVC.supportsAlpha = false
+        
+        present(colorPickerVC, animated: true)
+    }
+    
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        
+        guard let newHex = viewController.selectedColor.hexString else { return }
+        tempHexString = newHex
+        
+        // Save color to realm
+        do {
+            try self.realm.write {
+                guard selectedIndexPath != nil else {return}
+                lists?[selectedIndexPath!.row].color = tempHexString
+                tempHexString = "00000000"
+            }
+        } catch {
+            print("Error writing color: \(error.localizedDescription)")
+        }
+        
+        tableView.reloadData()
+        
+        
     }
     
 }
