@@ -18,6 +18,8 @@ An app to let you store multiple to-do lists, add items, and check off items.
 * SQLLight 
 * RelationalDatabases
 * Singletons
+* UIColorPicker
+* UIColors
 
 ## Future Features / Fixes
 * Change itemCells text color based on the contrast of the background color
