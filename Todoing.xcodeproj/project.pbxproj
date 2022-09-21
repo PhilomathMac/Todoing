@@ -20,6 +20,7 @@
 		BB579CA628C920BE00C7515A /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB579CA528C920BE00C7515A /* UserList.swift */; };
 		BB7A429C28D96389006BBC87 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB7A429B28D96389006BBC87 /* SwipeCellKit */; };
 		BB7A429E28DA3EA4006BBC87 /* SwipeableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7A429D28DA3EA4006BBC87 /* SwipeableTableViewController.swift */; };
+		BB98097528DA9B5600494805 /* UIColorHexStringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB98097428DA9B5600494805 /* UIColorHexStringHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		BB579CA328C920B800C7515A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BB579CA528C920BE00C7515A /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		BB7A429D28DA3EA4006BBC87 /* SwipeableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableTableViewController.swift; sourceTree = "<group>"; };
+		BB98097428DA9B5600494805 /* UIColorHexStringHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHexStringHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				BA4856E728C272F1004BEC19 /* Models */,
 				BA4856E628C272EA004BEC19 /* ViewControllers */,
 				BA4856E528C272E5004BEC19 /* Views */,
+				BB98097328DA9B3500494805 /* Helpers */,
 				BA4856DA28C270E7004BEC19 /* Assets.xcassets */,
 				BA4856DF28C270E7004BEC19 /* Info.plist */,
 			);
@@ -107,6 +110,14 @@
 				BB579CA328C920B800C7515A /* Item.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		BB98097328DA9B3500494805 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BB98097428DA9B5600494805 /* UIColorHexStringHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB98097528DA9B5600494805 /* UIColorHexStringHelper.swift in Sources */,
 				BACA4D9C28C7ED5000F7179A /* ListsTableViewController.swift in Sources */,
 				BB579CA628C920BE00C7515A /* UserList.swift in Sources */,
 				BA4856D628C270DC004BEC19 /* ItemsViewController.swift in Sources */,

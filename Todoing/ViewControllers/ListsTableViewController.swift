@@ -141,9 +141,7 @@ extension ListsTableViewController {
         // Present ColorPicker
         presentColorPicker()
         
-        // Get ColorPicker's Color
-        // Set list's color
-        
+
     }
     
 }
@@ -155,16 +153,13 @@ extension ListsTableViewController: UIColorPickerViewControllerDelegate {
     @objc func presentColorPicker() {
         let colorPickerVC = UIColorPickerViewController()
         colorPickerVC.delegate = self
+        colorPickerVC.supportsAlpha = false
+        
         present(colorPickerVC, animated: true)
     }
     
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         
-    }
-    
-    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-        
-        let color = viewController.selectedColor
         
     }
     
