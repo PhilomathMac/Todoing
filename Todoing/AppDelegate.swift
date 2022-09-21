@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //DEBUG PRINT STATEMENT
-        // print(Realm.Configuration.defaultConfiguration.fileURL)
+         print(Realm.Configuration.defaultConfiguration.fileURL)
         
         // Create new realm (like a persistent container)
         do {

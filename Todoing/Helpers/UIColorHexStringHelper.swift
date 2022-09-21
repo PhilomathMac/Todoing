@@ -49,11 +49,11 @@ extension UIColor {
     }
     
     //MARK: - HexString From UIColor
-    var toHex: String? {
+    var hexString: String? {
         return toHex()
     }
     
-    func toHex(alpha: Bool = false) -> String? {
+    func toHex() -> String? {
         // Extract color components using CGColor
         guard let components = cgColor.components, components.count >= 3 else { return nil }
         
@@ -74,7 +74,7 @@ extension UIColor {
          
          3. Convert to integer
          */
-        if alpha {
+        if components.count >= 4 {
             return String(format: "%02lX%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255), lroundf(a * 255))
         } else {
             return String(format: "%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255))

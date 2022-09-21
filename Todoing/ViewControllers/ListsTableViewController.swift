@@ -13,6 +13,9 @@ class ListsTableViewController: SwipeableTableViewController {
     let realm = try! Realm()
     
     var lists: Results<UserList>?
+    
+    var tempHexString = ""
+    var selectedIndexPath: IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +112,7 @@ extension ListsTableViewController {
         // Setup Cell
         newCell.textLabel?.text = lists?[indexPath.row].name ?? "No lists added yet"
         newCell.accessoryType = .detailButton
+        newCell.backgroundColor = UIColor(hex: lists?[indexPath.row].color ?? "00000000")
         
         // Return Cell
         return newCell
@@ -138,9 +142,10 @@ extension ListsTableViewController {
     // Show color picker
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         
+        selectedIndexPath = indexPath
+        
         // Present ColorPicker
         presentColorPicker()
-        
 
     }
     
@@ -159,6 +164,22 @@ extension ListsTableViewController: UIColorPickerViewControllerDelegate {
     }
     
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        
+        guard let newHex = viewController.selectedColor.hexString else { return }
+        tempHexString = newHex
+        
+        // Save color to realm
+        do {
+            try self.realm.write {
+                guard selectedIndexPath != nil else {return}
+                lists?[selectedIndexPath!.row].color = tempHexString
+                tempHexString = "00000000"
+            }
+        } catch {
+            print("Error writing color: \(error.localizedDescription)")
+        }
+        
+        tableView.reloadData()
         
         
     }
