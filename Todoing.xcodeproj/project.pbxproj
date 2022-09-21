@@ -21,6 +21,7 @@
 		BB7A429C28D96389006BBC87 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB7A429B28D96389006BBC87 /* SwipeCellKit */; };
 		BB7A429E28DA3EA4006BBC87 /* SwipeableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7A429D28DA3EA4006BBC87 /* SwipeableTableViewController.swift */; };
 		BB98097528DA9B5600494805 /* UIColorHexStringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB98097428DA9B5600494805 /* UIColorHexStringHelper.swift */; };
+		BBED0C6028DB75A800ECA3E0 /* UIColorContrastHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBED0C5F28DB75A700ECA3E0 /* UIColorContrastHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		BB579CA528C920BE00C7515A /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		BB7A429D28DA3EA4006BBC87 /* SwipeableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableTableViewController.swift; sourceTree = "<group>"; };
 		BB98097428DA9B5600494805 /* UIColorHexStringHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHexStringHelper.swift; sourceTree = "<group>"; };
+		BBED0C5F28DB75A700ECA3E0 /* UIColorContrastHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorContrastHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				BB98097428DA9B5600494805 /* UIColorHexStringHelper.swift */,
+				BBED0C5F28DB75A700ECA3E0 /* UIColorContrastHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				BB579CA628C920BE00C7515A /* UserList.swift in Sources */,
 				BA4856D628C270DC004BEC19 /* ItemsViewController.swift in Sources */,
 				BB7A429E28DA3EA4006BBC87 /* SwipeableTableViewController.swift in Sources */,
+				BBED0C6028DB75A800ECA3E0 /* UIColorContrastHelper.swift in Sources */,
 				BA4856D228C270DB004BEC19 /* AppDelegate.swift in Sources */,
 				BB579CA428C920B800C7515A /* Item.swift in Sources */,
 				BA4856D428C270DB004BEC19 /* SceneDelegate.swift in Sources */,
