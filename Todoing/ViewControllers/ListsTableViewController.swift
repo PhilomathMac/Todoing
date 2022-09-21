@@ -108,6 +108,7 @@ extension ListsTableViewController {
         
         // Setup Cell
         newCell.textLabel?.text = lists?[indexPath.row].name ?? "No lists added yet"
+        newCell.accessoryType = .detailButton
         
         // Return Cell
         return newCell
@@ -132,6 +133,39 @@ extension ListsTableViewController {
             destinationVC.selectedList = lists?[indexPath.row]
             
         }
+    }
+    
+    // Show color picker
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        // Present ColorPicker
+        presentColorPicker()
+        
+        // Get ColorPicker's Color
+        // Set list's color
+        
+    }
+    
+}
+
+// MARK: - ColorPicker
+
+extension ListsTableViewController: UIColorPickerViewControllerDelegate {
+    
+    @objc func presentColorPicker() {
+        let colorPickerVC = UIColorPickerViewController()
+        colorPickerVC.delegate = self
+        present(colorPickerVC, animated: true)
+    }
+    
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        
+    }
+    
+    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+        
+        let color = viewController.selectedColor
+        
     }
     
 }
