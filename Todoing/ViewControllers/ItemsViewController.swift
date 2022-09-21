@@ -118,6 +118,11 @@ extension ItemsViewController {
         newCell.textLabel?.text = task.title
         newCell.accessoryType = task.done ? .checkmark : .none
         
+        if let listColor = UIColor(hex: selectedList?.color ?? "00000000") {
+            let alphaAmount = 0.1 * Double(indexPath.row)
+            newCell.backgroundColor = UIColor(hex: selectedList?.color ?? "00000000")?.withAlphaComponent(alphaAmount)
+        }
+        
         // Return cell
         return newCell
         
