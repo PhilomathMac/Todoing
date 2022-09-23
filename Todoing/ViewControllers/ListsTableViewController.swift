@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class ListsTableViewController: SwipeableTableViewController {
-    
+    //MARK: - Properties
     let realm = try! Realm()
     
     var lists: Results<UserList>?
@@ -17,6 +17,7 @@ class ListsTableViewController: SwipeableTableViewController {
     var tempHexString = ""
     var selectedIndexPath: IndexPath?
 
+    //MARK: - Navigation and LifeCycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 75.0
@@ -24,7 +25,7 @@ class ListsTableViewController: SwipeableTableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(animated)
         if let navBar = navigationController?.navigationBar {
             navBar.tintColor = .black
             navBar.barTintColor = .clear
@@ -34,6 +35,7 @@ class ListsTableViewController: SwipeableTableViewController {
         
     }
     
+    //MARK: - Actions
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
