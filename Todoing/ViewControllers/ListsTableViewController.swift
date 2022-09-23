@@ -130,8 +130,10 @@ extension ListsTableViewController {
 
             if cellColor.contrastRatio(withColor: .black) ?? 0 < 10 {
                 newCell.textLabel?.textColor = .white
+                newCell.tintColor = .white
             } else if cellColor.contrastRatio(withColor: .white) ?? 0 < 10 {
                 newCell.textLabel?.textColor = .black
+                newCell.tintColor = .black
             }
         }
         
