@@ -32,21 +32,11 @@ class ItemsViewController: SwipeableTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         title = selectedList!.name
         if let navBar = navigationController?.navigationBar {
-            if let pageColor = UIColor(hex: selectedList!.color ?? "00000000") {
+            if let listColor = UIColor(hex: selectedList!.color ?? "00000000") {
                 
-                navBar.barTintColor = pageColor
-                navBar.backgroundColor = pageColor
-                
-                searchBar.barTintColor = pageColor
-                searchBar.searchTextField.backgroundColor = .white
-                
-                if pageColor.contrastRatio(withColor: .black) ?? 0 < 10 {
-                    navBar.tintColor = .white
-                    navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-                } else if pageColor.contrastRatio(withColor: .white) ?? 0 < 10 {
-                    navBar.tintColor = .black
-                    navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
-                }
+                navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : listColor]
+                searchBar.tintColor = listColor
+                navBar.tintColor = listColor
             }
         }
         
