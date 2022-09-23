@@ -125,7 +125,7 @@ extension ListsTableViewController {
         // Setup Cell
         newCell.textLabel?.text = lists?[indexPath.row].name ?? "No lists added yet"
         newCell.accessoryType = .detailButton
-        if let cellColor = UIColor(hex: lists?[indexPath.row].color ?? "00000000") {
+        if let cellColor = UIColor(hex: lists?[indexPath.row].color ?? "FFFFFFFF") {
             newCell.backgroundColor = cellColor
 
             if cellColor.contrastRatio(withColor: .black) ?? 0 < 10 {

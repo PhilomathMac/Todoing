@@ -33,7 +33,7 @@ class ItemsViewController: SwipeableTableViewController {
         super.viewWillAppear(animated)
         title = selectedList!.name
         if let navBar = navigationController?.navigationBar {
-            if let listColor = UIColor(hex: selectedList!.color ?? "00000000") {
+            if let listColor = UIColor(hex: selectedList!.color ?? "FFFFFFFF") {
                 
                 navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : listColor]
                 navBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : listColor]
