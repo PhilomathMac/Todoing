@@ -20,11 +20,36 @@ class ItemsViewController: SwipeableTableViewController {
     }
     let realm = try! Realm()
 
+    @IBOutlet var searchBar: UISearchBar!
     
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 75.0
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        title = selectedList!.name
+        if let navBar = navigationController?.navigationBar {
+            if let pageColor = UIColor(hex: selectedList!.color ?? "00000000") {
+                
+                navBar.barTintColor = pageColor
+                navBar.backgroundColor = pageColor
+                
+                searchBar.barTintColor = pageColor
+                searchBar.searchTextField.backgroundColor = .white
+                
+                if pageColor.contrastRatio(withColor: .black) ?? 0 < 10 {
+                    navBar.tintColor = .white
+                    navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+                } else if pageColor.contrastRatio(withColor: .white) ?? 0 < 10 {
+                    navBar.tintColor = .black
+                    navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+                }
+            }
+        }
+        
     }
 
     // MARK: - Data Model Management Methods

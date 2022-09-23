@@ -23,6 +23,17 @@ class ListsTableViewController: SwipeableTableViewController {
         loadLists()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let navBar = navigationController?.navigationBar {
+            navBar.tintColor = .black
+            navBar.barTintColor = .clear
+            navBar.backgroundColor = .clear
+            navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+        }
+        
+    }
+    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
