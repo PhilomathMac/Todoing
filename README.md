@@ -23,9 +23,8 @@ An app to let you store multiple to-do lists, add items, and check off items.
 
 ## Future Features / Fixes
 * Change itemCells text color based on the contrast of the background color
-* Change navigationBar of itemVC to be the list color
 * Change disclosure button on listCells to be a paint icon
-* Change disclosure button color on listCells based on the contrast of the background color
+* Fix bug where navBar turns black when tableView scrolls up
 
 ## Use Instructions
 
