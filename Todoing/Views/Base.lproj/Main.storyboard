@@ -31,7 +31,7 @@
                             <outlet property="delegate" destination="geY-8c-JXy" id="QO4-u1-LNK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todoing" id="kKW-ex-sYa">
+                    <navigationItem key="navigationItem" title="Todoing" largeTitleDisplayMode="always" id="kKW-ex-sYa">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="uZa-Mg-kXT">
                             <connections>
                                 <action selector="addButtonPressed:" destination="geY-8c-JXy" id="zdS-bZ-sTH"/>
@@ -97,7 +97,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="1wL-ib-P71">
                         <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" systemColor="systemCyanColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -112,9 +111,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
